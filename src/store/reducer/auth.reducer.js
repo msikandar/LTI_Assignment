@@ -1,7 +1,9 @@
 import { ActionTypes } from '../constants/action-types'
 
 const initialState = {
-  loginData: [{ email: 'test@gmail.com', password: 'Qwerty@123' }],
+  loginData: [
+    { email: 'test@gmail.com', password: 'Qwerty@123', userName: 'test' },
+  ],
   currentUser: {
     email: null,
     userName: null,
@@ -19,6 +21,7 @@ export const authReducer = (state = initialState, action) => {
         },
       }
     case ActionTypes.REGISTER_SUCCESS:
+      console.log(action.data)
       return {
         ...state,
         loginData: [...state.loginData, action?.data],
