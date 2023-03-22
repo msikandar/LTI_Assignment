@@ -2,6 +2,7 @@ import Register from '../view/Register'
 import Login from '../view/Login'
 import MainScreen from '../view/MainScreen'
 import useAuth from '../hooks/useAuth'
+import EventForm from '../view/EventForm'
 
 function Routes() {
   const user = useAuth()
@@ -23,6 +24,10 @@ function Routes() {
     {
       path: '/main-screen',
       element: MainScreen,
+    },
+    {
+      path: '/event-form-screen',
+      element: EventForm,
     },
     {
       path: '*',

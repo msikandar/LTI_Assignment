@@ -21,9 +21,6 @@ function Register() {
       userName: '',
       email: '',
       password: '',
-      confirmPassword: '',
-      checkbox: [],
-      radio: '',
     },
   })
 
@@ -61,6 +58,7 @@ function Register() {
                         password: data.password,
                       })
                     )
+                    navigate('/login-screen')
                     reset()
                   } else {
                     toast.error('email already registered')
@@ -114,14 +112,31 @@ function Register() {
                     Password
                   </label>
                   <input
-                    {...register('password')}
+                    {...register('password', {
+                      required: 'Password is required',
+                      minLength: {
+                        value: 8,
+                        message: 'Password must be at least 8 characters',
+                      },
+                      pattern: {
+                        value:
+                          /^(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+                        message:
+                          'Password must contain at least 1 uppercase letter and 1 special character',
+                      },
+                    })}
                     type='password'
                     autoComplete='on'
                     placeholder='••••••••'
                     className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
                   />
+                  {errors.password && (
+                    <span className='flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1'>
+                      {errors.password.message}
+                    </span>
+                  )}
                 </div>
-                <div>
+                {/* <div>
                   <label className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>
                     Confirm password
                   </label>
@@ -132,7 +147,7 @@ function Register() {
                     placeholder='••••••••'
                     className='bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
                   />
-                </div>
+                </div> */}
                 <div className='flex items-start'>
                   <div className='flex items-center h-5'>
                     <input

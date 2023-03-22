@@ -1,31 +1,33 @@
-import { applyMiddleware, combineReducers, createStore } from 'redux';
-import { persistReducer, persistStore } from 'redux-persist';
+import { applyMiddleware, combineReducers, createStore } from 'redux'
+import { persistReducer, persistStore } from 'redux-persist'
 // import { encryptTransform } from 'redux-persist-transform-encrypt';
-import logger from 'redux-logger';
+import logger from 'redux-logger'
 
-import storage from 'redux-persist/lib/storage';
+import storage from 'redux-persist/lib/storage'
 
-import { authReducer } from './reducer/auth.reducer';
+import { authReducer } from './reducer/auth.reducer'
+import { eventReducer } from './reducer/events.reducer'
 
 const rootReducer = combineReducers({
-    auth: authReducer,
-});
+  auth: authReducer,
+  events: eventReducer,
+})
 
 const persistConfig = {
-    key: 'lti',
-    blacklist: [],
-    storage,
-    // transforms: [
-    //     encryptTransform({
-    //         secretKey: process.env.REACT_APP_SECRET_KEY,
-    //         onError: function (error) {
-    //             // Handle the error.
-    //         },
-    //     }),
-    // ],
-};
-const persistedReducer = persistReducer(persistConfig, rootReducer);
-const store = createStore(persistedReducer, applyMiddleware(logger));
-const persistor = persistStore(store);
-export default store;
-export { persistor };
+  key: 'lti',
+  blacklist: [],
+  storage,
+  // transforms: [
+  //     encryptTransform({
+  //         secretKey: process.env.REACT_APP_SECRET_KEY,
+  //         onError: function (error) {
+  //             // Handle the error.
+  //         },
+  //     }),
+  // ],
+}
+const persistedReducer = persistReducer(persistConfig, rootReducer)
+const store = createStore(persistedReducer, applyMiddleware(logger))
+const persistor = persistStore(store)
+export default store
+export { persistor }
