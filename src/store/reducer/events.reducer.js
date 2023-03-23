@@ -24,20 +24,40 @@ export const eventReducer = (state = initialState, action) => {
         }
       } else {
         //new user
+        const newUpdEvents = [
+          ...state.userEventsData,
+          { email: action.data.email, data: [action.data.event] },
+        ]
+        console.log(newUpdEvents, 'newupt')
         return {
-          userEventsData: [
-            ...state.userEventsData,
-            { email: action.data.email, data: [action.data.event] },
-          ],
+          userEventsData: [...newUpdEvents],
         }
       }
 
-    // case ActionTypes.UPDATE_EVENT:
-    // //   console.log(action.data)
-    //   return {
-    //     // ...state,
-    //     // loginData: [...state.loginData, action?.data],
-    //   }
+    case ActionTypes.DELETE_EVENT:
+      const filterDel = state.userEventsData.filter(
+        (d) => d.email === action.data.email
+      )
+
+      if (filterDel?.length > 0) {
+        // email alreday present
+        const updatedData = state.userEventsData.map((e) => {
+          if (e.email === action.data.email) {
+            console.log(
+              e.data.filter((el) => el.id != action.data.id),
+              'e'
+            )
+            e.data = e.data.filter((el) => el.id != action.data.id)
+          }
+          return e
+        })
+
+        console.log(updatedData, 'updated ')
+        return {
+          userEventsData: [...updatedData],
+        }
+      }
+
     // case ActionTypes.LOGOUT_SUCCESS:
     //   return {
     //     ...state,

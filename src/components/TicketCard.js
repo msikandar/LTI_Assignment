@@ -9,6 +9,7 @@ const TicketCard = ({
   type,
   onEdit,
   onDelete,
+  id,
 }) => {
   let colorClass = ''
 
@@ -36,10 +37,10 @@ const TicketCard = ({
       <div className={`px-4 py-2 ${colorClass} font-bold text-center relative`}>
         <h1 className='text-lg'>{title}</h1>
         <div className='absolute right-0 top-0 mt-2 mr-2'>
-          <button onClick={onEdit} className='text-white mr-2'>
+          <button onClick={() => onEdit(id)} className='text-white mr-2'>
             <FaEdit />
           </button>
-          <button onClick={onDelete} className='text-white'>
+          <button onClick={() => onDelete(id)} className='text-white'>
             <FaTrash />
           </button>
         </div>

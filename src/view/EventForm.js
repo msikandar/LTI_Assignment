@@ -1,10 +1,16 @@
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import useAuth from '../hooks/useAuth'
 import { createEvent } from '../store/action/eventAction'
+import { uniqueId } from '../utils/helper'
 
 function EventForm() {
-  const user = useSelector((state) => state.auth.currentUser)
   const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const user = useSelector((state) => state.auth.currentUser)
+
   const {
     register,
     handleSubmit,
@@ -16,12 +22,17 @@ function EventForm() {
     dispatch(
       createEvent({
         email: user.email,
-        event: data,
+        event: { ...data, id: uniqueId() },
       })
     )
+    navigate('/main-screen')
   }
 
-  return (
+  useEffect(() => {
+    !useAuth() ? navigate('/login-screen') : null
+  }, [])
+
+  return useAuth() ? (
     <div className='flex items-center justify-center h-screen'>
       <form
         onSubmit={handleSubmit(onSubmit)}
@@ -168,7 +179,7 @@ function EventForm() {
         </button>
       </form>
     </div>
-  )
+  ) : null
 }
 
 export default EventForm

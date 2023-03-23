@@ -6,3 +6,10 @@ export const createEvent = (data) => {
     data: data,
   }
 }
+
+export const deleteEvent = (data) => {
+  return {
+    type: ActionTypes.DELETE_EVENT,
+    data: data,
+  }
+}
