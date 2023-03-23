@@ -63,8 +63,20 @@ function MainScreen() {
           Create Event
         </button>
         <span>
-          <button className='px-4 ml-96 py-2 bg-gray-500 hover:bg-blue-600 text-white text-sm font-medium rounded-full'>
+          <button className='px-4 ml-96 py-2 bg-gray-100  text-black text-sm font-medium rounded-full'>
             {user.email}
+          </button>
+        </span>
+        <span>
+          <button
+            onClick={() => {
+              console.log('logout')
+              localStorage.removeItem('user')
+              navigate('/login-screen')
+            }}
+            className='px-4 ml-86 py-2 bg-gray-500 hover:bg-gray-400 text-white text-sm font-medium rounded-full'
+          >
+            Logout
           </button>
         </span>
       </div>
