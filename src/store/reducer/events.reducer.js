@@ -7,6 +7,7 @@ const initialState = {
 export const eventReducer = (state = initialState, action) => {
   switch (action.type) {
     case ActionTypes.CREATE_EVENT:
+      // filter out by current user email
       const filterData = state.userEventsData.filter(
         (d) => d.email === action.data.email
       )
@@ -28,7 +29,7 @@ export const eventReducer = (state = initialState, action) => {
           ...state.userEventsData,
           { email: action.data.email, data: [action.data.event] },
         ]
-        console.log(newUpdEvents, 'newupt')
+
         return {
           userEventsData: [...newUpdEvents],
         }
@@ -43,29 +44,40 @@ export const eventReducer = (state = initialState, action) => {
         // email alreday present
         const updatedData = state.userEventsData.map((e) => {
           if (e.email === action.data.email) {
-            console.log(
-              e.data.filter((el) => el.id != action.data.id),
-              'e'
-            )
+            // delete event
             e.data = e.data.filter((el) => el.id != action.data.id)
           }
           return e
         })
 
-        console.log(updatedData, 'updated ')
         return {
           userEventsData: [...updatedData],
         }
       }
 
-    // case ActionTypes.LOGOUT_SUCCESS:
-    //   return {
-    //     ...state,
-    //     currentUser: {
-    //       email: null,
-    //       userName: null,
-    //     },
-    //   }
+    case ActionTypes.UPDATE_EVENT:
+      const filterUpdate = state.userEventsData.filter(
+        (d) => d.email === action.data.email
+      )
+
+      if (filterUpdate?.length > 0) {
+        // email alreday present
+        const updatedData = state.userEventsData.map((e) => {
+          if (e.email === action.data.email) {
+            e.data = e.data.map((el) => {
+              if (el.id === action.data.event.id) {
+                el = action.data.event
+              }
+              return el
+            })
+          }
+          return e
+        })
+
+        return {
+          userEventsData: [...updatedData],
+        }
+      }
     default:
       return state
   }

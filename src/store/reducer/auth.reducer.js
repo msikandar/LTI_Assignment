@@ -21,7 +21,6 @@ export const authReducer = (state = initialState, action) => {
         },
       }
     case ActionTypes.REGISTER_SUCCESS:
-      console.log(action.data)
       return {
         ...state,
         loginData: [...state.loginData, action?.data],

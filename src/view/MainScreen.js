@@ -13,39 +13,61 @@ function MainScreen() {
 
   useEffect(() => {
     !useAuth() ? navigate('/login-screen') : null
-    console.log(user)
   }, [])
 
+  /**
+   *
+   * @param {String} email
+   * @param {Object} data
+   * @returns
+   */
   const getEventsByEmail = (email, data) => {
     const filter = data.filter((el) => email === el.email)
 
     if (filter.length > 0) {
-      console.log(filter[0].data, 'filter')
       return filter[0].data
     } else {
       return []
     }
   }
 
-  const handleEdit = (email, id) => {
-    console.log(email, id)
+  /**
+   * edit event handler
+   * @param {Object} event
+   */
+  const handleEdit = (event) => {
+    navigate('/event-form-screen', {
+      state: {
+        event,
+      },
+    })
   }
+  /**
+   * delete event handler
+   * @param {String} email
+   * @param {String} id
+   */
   const handleDelete = (email, id) => {
-    console.log(email, id)
     dispatch(deleteEvent({ email, id }))
   }
 
   return useAuth() ? (
     <>
-      <p>{user.userName}</p>
-      <button
-        onClick={() => {
-          navigate('/event-form-screen')
-        }}
-        className='inline-flex items-center px-4 ml-12 mb-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-medium rounded-md'
-      >
-        Create Event
-      </button>
+      <div>
+        <button
+          onClick={() => {
+            navigate('/event-form-screen')
+          }}
+          className='inline-flex mt-4 items-center px-4 ml-12 mb-4 py-2 bg-indigo-500 hover:bg-indigo-600 text-white text-sm font-medium rounded-md'
+        >
+          Create Event
+        </button>
+        <span>
+          <button className='px-4 ml-96 py-2 bg-gray-500 hover:bg-blue-600 text-white text-sm font-medium rounded-full'>
+            {user.email}
+          </button>
+        </span>
+      </div>
       <div className='grid grid-cols-4 md:grid-cols-4 gap-2 px-12'>
         {getEventsByEmail(user?.email, userData).map((el, index) => (
           <div key={index}>
@@ -56,7 +78,7 @@ function MainScreen() {
               date={el.date}
               price={'$ ' + `${el.price}`}
               type={el.booking_type}
-              onEdit={(id) => handleEdit(user?.email, id)}
+              onEdit={(id) => handleEdit(el)}
               onDelete={(id) => handleDelete(user?.email, id)}
             />
           </div>

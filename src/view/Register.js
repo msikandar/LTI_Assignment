@@ -10,7 +10,6 @@ function Register() {
   const navigate = useNavigate()
   const registeredUsers = useSelector((state) => state.auth.loginData)
 
-  console.log(registeredUsers, 'users')
   const {
     register,
     handleSubmit,
@@ -64,8 +63,6 @@ function Register() {
                     toast.error('email already registered')
                     // alert('email already registered')
                   }
-
-                  console.log(data)
                 })}
               >
                 <div>

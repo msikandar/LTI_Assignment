@@ -17,14 +17,6 @@ const persistConfig = {
   key: 'lti',
   blacklist: [],
   storage,
-  // transforms: [
-  //     encryptTransform({
-  //         secretKey: process.env.REACT_APP_SECRET_KEY,
-  //         onError: function (error) {
-  //             // Handle the error.
-  //         },
-  //     }),
-  // ],
 }
 const persistedReducer = persistReducer(persistConfig, rootReducer)
 const store = createStore(persistedReducer, applyMiddleware(logger))
